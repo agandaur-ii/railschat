@@ -12,7 +12,22 @@ consumer.subscriptions.create("RoomChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
+    $('#msg').append('<div class="message"> ' + data.content + '</div>')
     console.log("Recieving:")
     console.log(data.content)
   }
 });
+
+let submit_messages;
+$(document).on('turbolinks:load', function () {
+  submit_messages()
+})
+submit_messages = function () {
+  $('#message_content').on('keydown', function (event) {
+    if (event.keyCode == 13) {
+      $('input').click()
+      event.target.value = ''
+      event.preventDefault()
+    }
+  })
+}
